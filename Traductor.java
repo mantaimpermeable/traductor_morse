@@ -107,22 +107,20 @@ public class Traductor {
 
     //Logica del traductor
     public static void empezar (Scanner scanner){
-        //uso booleano para controlar el while por costumbre de clase
-        boolean jugar = true;
 
         System.out.println("Bienvenido al traductor de codigo morse hecho a las 1:36 de un martes cualquiera");
         System.out.println("Puedes traducir palabras que contengan letras de la A a la Z, del 0 al 9 y algunos simbolos");
         System.out.println("Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento");
         System.out.println("Para salir del programa escribe : kirkexiting");
 
-        while(jugar){
+        while(true){
             System.out.println("Comienza a meter texto para traducir:");
             String texto = scanner.nextLine();
 
             //Si se introduce el texto de salida se da un mensaje y se rompe el bucle terminando el programa
             if(texto.equalsIgnoreCase("kirkexiting")){
                 System.out.println("Saliendo del programa");
-                jugar = false;
+                break;
             }
 
             //Si la entrada de texto esta vacia repetimos el programa y pedimos texto
@@ -131,12 +129,12 @@ public class Traductor {
                 //creo que primera vez que uso continuo
                 continue;
             }
-            else{
+            
             //Damos el texto original y la traduccion en morse
             String morse = traductor(texto);
             System.out.println("Texto original: " + texto);
             System.out.println("Texto en morse: " + morse);
-            }
+            
         }
         scanner.close();
     }
