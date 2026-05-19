@@ -7,7 +7,7 @@ public class Traductor {
         return (texto != null && texto != "");
     }
     private static HashMap<Character, String> abecedario = new HashMap<>();
-    {
+    static {
         //Introducimos dentro del hashmap todas las llaves
     abecedario.put('A', ".-");
         abecedario.put('B', "-...");
@@ -131,11 +131,12 @@ public class Traductor {
                 //creo que primera vez que uso continuo
                 continue;
             }
-
+            else{
             //Damos el texto original y la traduccion en morse
             String morse = traductor(texto);
             System.out.println("Texto original: " + texto);
             System.out.println("Texto en morse: " + morse);
+            }
         }
         scanner.close();
     }
