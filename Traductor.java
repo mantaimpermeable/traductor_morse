@@ -66,7 +66,7 @@ public class Traductor {
         abecedario.put('_', "..--.-");
         abecedario.put('/', "-..-.");
     }
-    
+
     public static String traductorAMorse(String texto){
         String resultado = "";
         //Si la texto no es valida no se ejecuta y se devuelve un string vacio
@@ -106,7 +106,27 @@ public class Traductor {
     }
 
     private static String traductorDeMorse(String texto){
-        return "";
+        String resultado = "";
+        if(validString(texto)){
+            //Metemos cada letra en una posicion de una array 
+            String[] letras = texto.split("/");
+
+            //Iteramos por cada una de las letras en nuestro array para encontrar su equivalente en el abecedario
+          for(int i = 0; i < letras.length; i++){
+
+            //Probamos nuevo metodo map.entry para recorrer nuestro hashMap
+            for(HashMap.Entry<Character,String> llave : abecedario.entrySet()){
+                //Si la letra con la que estamos trabajando coincide con algun valor del abecedario se traduce y si no se pone ?
+                if(letras[i].trim() == llave.getValue()){
+                    resultado += llave.getKey();
+                }else{
+                    resultado += "?";
+                }
+            }
+
+           }
+        }
+        return resultado;
     }
 
 
@@ -125,7 +145,7 @@ public class Traductor {
             System.out.println("El texto que vas a introducir es M (morse) o C (corriente)?");
             String eleccion = scanner.nextLine();
 
-            if(eleccion.isEmpty() || !(eleccion.equalsIgnoreCase("C")) || !(eleccion.equalsIgnoreCase("M"))){
+            if(eleccion.isEmpty() || (!(eleccion.equalsIgnoreCase("c")) && !(eleccion.equalsIgnoreCase("m")))){
                 System.out.println("No es tan dificil va, una de las dos opcinoes");
                 //usamos el continue para volver al principio del bucle
                 continue;
@@ -133,7 +153,8 @@ public class Traductor {
             //Si utilizo un else la variable no funciona para futura comprbacion, pero no es necesario porque si no tiene los valores que queremos
             //se ejecutara un continue y no se llegara a la parte del programa
                 //Primera vez que uso el operador ternario
-                boolean morse = (eleccion.equalsIgnoreCase("M")) ? true : false;
+                boolean morse = eleccion.equalsIgnoreCase("M");
+                String modo = (morse) ? "morse" : "corriente";
             
             System.out.print("Comienza a meter texto para traducir:");
              texto = scanner.nextLine();
@@ -148,11 +169,12 @@ public class Traductor {
             else{
             //Damos el texto original y la traduccion en morse
             String traduccion;
-            if(morse)traduccion = traductorAMorse(texto);
-            else traduccion = traductorDeMorse(texto);
+        
+            if(morse)traduccion = traductorDeMorse(texto);
+            else traduccion = traductorAMorse(texto);
              
-            System.out.println("Texto original: " + texto);
-            System.out.println("Texto en: " + traduccion);
+            System.out.println("Texto original : " + texto);
+            System.out.println("Texto en " + modo + " : " + traduccion);
             
         }
     }
