@@ -66,7 +66,8 @@ public class Traductor {
         abecedario.put('_', "..--.-");
         abecedario.put('/', "-..-.");
     }
-    public static String traductor(String texto){
+    
+    public static String traductorAMorse(String texto){
         String resultado = "";
         //Si la texto no es valida no se ejecuta y se devuelve un string vacio
         if(validString(texto)){
@@ -104,6 +105,10 @@ public class Traductor {
         return resultado;
     }
 
+    private static String traductorDeMorse(String texto){
+        return "";
+    }
+
 
     //Logica del traductor
     public static void empezar (Scanner scanner){
@@ -113,30 +118,46 @@ public class Traductor {
         System.out.println("Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento");
         System.out.println("Para salir del programa escribe : kirkexiting");
 
-        while(true){
-            System.out.println("Comienza a meter texto para traducir:");
-            String texto = scanner.nextLine();
+        //Utilizamos la variable texto para hacer las conversiones pero tambien segun su valor se sigue o no el bucle
+        String texto = "";
+        while(!(texto.equalsIgnoreCase("kirkexiting"))){
 
-            //Si se introduce el texto de salida se da un mensaje y se rompe el bucle terminando el programa
-            if(texto.equalsIgnoreCase("kirkexiting")){
-                System.out.println("Saliendo del programa");
-                break;
+            System.out.println("El texto que vas a introducir es M (morse) o C (corriente)?");
+            String eleccion = scanner.nextLine();
+
+            if(eleccion.isEmpty() || !(eleccion.equalsIgnoreCase("C")) || !(eleccion.equalsIgnoreCase("M"))){
+                System.out.println("No es tan dificil va, una de las dos opcinoes");
+                //usamos el continue para volver al principio del bucle
+                continue;
             }
+            //Si utilizo un else la variable no funciona para futura comprbacion, pero no es necesario porque si no tiene los valores que queremos
+            //se ejecutara un continue y no se llegara a la parte del programa
+                //Primera vez que uso el operador ternario
+                boolean morse = (eleccion.equalsIgnoreCase("M")) ? true : false;
+            
+            System.out.print("Comienza a meter texto para traducir:");
+             texto = scanner.nextLine();
 
+            
             //Si la entrada de texto esta vacia repetimos el programa y pedimos texto
             if(texto.trim().isEmpty()){
                 System.out.println("No me ralles e introduce texto");
                 //creo que primera vez que uso continuo
                 continue;
             }
-            
+            else{
             //Damos el texto original y la traduccion en morse
-            String morse = traductor(texto);
+            String traduccion;
+            if(morse)traduccion = traductorAMorse(texto);
+            else traduccion = traductorDeMorse(texto);
+             
             System.out.println("Texto original: " + texto);
-            System.out.println("Texto en morse: " + morse);
+            System.out.println("Texto en: " + traduccion);
             
         }
+    }
         scanner.close();
+        System.out.println("Saliendo del programa");
     }
 }
 
