@@ -66,7 +66,16 @@ public class Traductor {
         abecedario.put('_', "..--.-");
         abecedario.put('/', "-..-.");
     }
-    public static String traductor(String texto){
+
+    private static HashMap<String, Character> abecedarioInverso = new HashMap();
+    static{
+        //Usamos el map.entry para recorrer todos los elementos del abcedario facilmente
+        for(HashMap.Entry<Character, String> llave : abecedario.entrySet()){
+        abecedarioInverso.put(llave.getValue(), llave.getKey());
+        }
+    }
+
+    public static String traductorAMorse(String texto){
         String resultado = "";
         //Si la texto no es valida no se ejecuta y se devuelve un string vacio
         if(validString(texto)){
@@ -104,6 +113,42 @@ public class Traductor {
         return resultado;
     }
 
+    private static String traductorDeMorse(String texto){
+        StringBuilder provisional = new StringBuilder();
+        if(validString(texto)){
+            
+            //Separamos el texto en palabras
+            String[] palabras = texto.split("/");
+
+            //iteramos por cada palabra que tenga el texto
+          for(int i = 0; i < palabras.length; i++){
+            //Creamos variable que representa cada palabra del texto
+            String palabra = palabras[i].trim();
+            //Comprobamos que la palabra sea valida
+            if(validString(palabra)){
+                //Metemos todas las letras de la palabra en un array
+                String[] letras = palabra.split(" ");
+                //usamos un for each para cada elemento de letras
+                for(String letra : letras){
+                    //Si la letra esta en nuestro abecedario inverso entonces se añade
+                    if(abecedarioInverso.containsKey(letra)){
+                        provisional.append(abecedarioInverso.get(letra));
+                    }else{
+                        provisional.append("?");
+                    }
+                }
+                
+            }
+            //Despues de cada palabra añadimos un espacio a no ser que sea la ultima
+            if(i < palabras.length - 1){
+                provisional.append(" ");
+            }
+
+           }
+        }
+        return provisional.toString();
+    }
+
 
     //Logica del traductor
     public static void empezar (Scanner scanner){
@@ -113,30 +158,51 @@ public class Traductor {
         System.out.println("Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento");
         System.out.println("Para salir del programa escribe : kirkexiting");
 
+        //Utilizamos la variable texto para hacer las conversiones pero tambien segun su valor se sigue o no el bucle
+        String texto = "";
         while(true){
-            System.out.println("Comienza a meter texto para traducir:");
-            String texto = scanner.nextLine();
 
-            //Si se introduce el texto de salida se da un mensaje y se rompe el bucle terminando el programa
-            if(texto.equalsIgnoreCase("kirkexiting")){
-                System.out.println("Saliendo del programa");
-                break;
+            System.out.println("El texto que vas a introducir es M (morse) o C (corriente)?");
+            String eleccion = scanner.nextLine();
+
+            if(eleccion.isEmpty() || (!(eleccion.equalsIgnoreCase("c")) && !(eleccion.equalsIgnoreCase("m")))){
+                System.out.println("No es tan dificil va, una de las dos opcinoes");
+                //usamos el continue para volver al principio del bucle
+                continue;
             }
+            //Si utilizo un else la variable no funciona para futura comprbacion, pero no es necesario porque si no tiene los valores que queremos
+            //se ejecutara un continue y no se llegara a la parte del programa
+                //Primera vez que uso el operador ternario
+                boolean morse = eleccion.equalsIgnoreCase("M");
+                String modo = (morse) ? "morse" : "corriente";
+            
+            System.out.print("Comienza a meter texto para traducir:");
+             texto = scanner.nextLine();
 
+             if(texto.equalsIgnoreCase("kirkexiting")){
+                break;
+             }
+            
             //Si la entrada de texto esta vacia repetimos el programa y pedimos texto
             if(texto.trim().isEmpty()){
                 System.out.println("No me ralles e introduce texto");
                 //creo que primera vez que uso continuo
                 continue;
             }
-            
+            else{
             //Damos el texto original y la traduccion en morse
-            String morse = traductor(texto);
-            System.out.println("Texto original: " + texto);
-            System.out.println("Texto en morse: " + morse);
+            String traduccion;
+        
+            if(morse)traduccion = traductorDeMorse(texto);
+            else traduccion = traductorAMorse(texto);
+             
+            System.out.println("Texto original : " + texto);
+            System.out.println("Texto en " + modo + " : " + traduccion);
             
         }
+    }
         scanner.close();
+        System.out.println("Saliendo del programa");
     }
 }
 
