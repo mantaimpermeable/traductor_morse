@@ -88,8 +88,8 @@ public class Traductor {
                 char letra = mayuscula.charAt(i);
                 //Si nuestro abecedario contiene la letra, que es una llave del hashmap entonces hacemos
                 //append del contenido de la llave que es el equivalente en morse
-                if(abecedarioInverso.containsKey(letra)){
-                    provisional.append(abecedarioInverso.get(letra));
+                if(abecedario.containsKey(letra)){
+                    provisional.append(abecedario.get(letra));
 
                     //Agregamos despues de cada caracter un espacio para diferenciar cada letra
                     //para el final de cada texto ya se agregara un espacio distinto(7 espacios segun morse pero demasiado)
@@ -132,7 +132,7 @@ public class Traductor {
                 for(String letra : letras){
                     //Si la letra esta en nuestro abecedario inverso entonces se añade
                     if(abecedarioInverso.containsKey(letra)){
-                        provisional.append(letra);
+                        provisional.append(abecedarioInverso.get(letra));
                     }else{
                         provisional.append("?");
                     }
@@ -160,7 +160,7 @@ public class Traductor {
 
         //Utilizamos la variable texto para hacer las conversiones pero tambien segun su valor se sigue o no el bucle
         String texto = "";
-        while(!(texto.equalsIgnoreCase("kirkexiting"))){
+        while(true){
 
             System.out.println("El texto que vas a introducir es M (morse) o C (corriente)?");
             String eleccion = scanner.nextLine();
@@ -179,6 +179,9 @@ public class Traductor {
             System.out.print("Comienza a meter texto para traducir:");
              texto = scanner.nextLine();
 
+             if(texto.equalsIgnoreCase("kirkexiting")){
+                break;
+             }
             
             //Si la entrada de texto esta vacia repetimos el programa y pedimos texto
             if(texto.trim().isEmpty()){
