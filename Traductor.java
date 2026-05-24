@@ -67,6 +67,14 @@ public class Traductor {
         abecedario.put('/', "-..-.");
     }
 
+    private static HashMap<String, Character> abecedarioInverso = new HashMap();
+    static{
+        //Usamos el map.entry para recorrer todos los elementos del abcedario facilmente
+        for(HashMap.Entry<Character, String> llave : abecedario.entrySet()){
+        abecedarioInverso.put(llave.getValue(), llave.getKey());
+        }
+    }
+
     public static String traductorAMorse(String texto){
         String resultado = "";
         //Si la texto no es valida no se ejecuta y se devuelve un string vacio
@@ -80,8 +88,8 @@ public class Traductor {
                 char letra = mayuscula.charAt(i);
                 //Si nuestro abecedario contiene la letra, que es una llave del hashmap entonces hacemos
                 //append del contenido de la llave que es el equivalente en morse
-                if(abecedario.containsKey(letra)){
-                    provisional.append(abecedario.get(letra));
+                if(abecedarioInverso.containsKey(letra)){
+                    provisional.append(abecedarioInverso.get(letra));
 
                     //Agregamos despues de cada caracter un espacio para diferenciar cada letra
                     //para el final de cada texto ya se agregara un espacio distinto(7 espacios segun morse pero demasiado)
@@ -106,27 +114,39 @@ public class Traductor {
     }
 
     private static String traductorDeMorse(String texto){
-        String resultado = "";
+        StringBuilder provisional = new StringBuilder();
         if(validString(texto)){
-            //Metemos cada letra en una posicion de una array 
-            String[] letras = texto.split("/");
+            
+            //Separamos el texto en palabras
+            String[] palabras = texto.split("/");
 
-            //Iteramos por cada una de las letras en nuestro array para encontrar su equivalente en el abecedario
-          for(int i = 0; i < letras.length; i++){
-
-            //Probamos nuevo metodo map.entry para recorrer nuestro hashMap
-            for(HashMap.Entry<Character,String> llave : abecedario.entrySet()){
-                //Si la letra con la que estamos trabajando coincide con algun valor del abecedario se traduce y si no se pone ?
-                if(letras[i].trim() == llave.getValue()){
-                    resultado += llave.getKey();
-                }else{
-                    resultado += "?";
+            //iteramos por cada palabra que tenga el texto
+          for(int i = 0; i < palabras.length; i++){
+            //Creamos variable que representa cada palabra del texto
+            String palabra = palabras[i].trim();
+            //Comprobamos que la palabra sea valida
+            if(validString(palabra)){
+                //Metemos todas las letras de la palabra en un array
+                String[] letras = palabra.split(" ");
+                //usamos un for each para cada elemento de letras
+                for(String letra : letras){
+                    //Si la letra esta en nuestro abecedario inverso entonces se añade
+                    if(abecedarioInverso.containsKey(letra)){
+                        provisional.append(letra);
+                    }else{
+                        provisional.append("?");
+                    }
                 }
+                
+            }
+            //Despues de cada palabra añadimos un espacio a no ser que sea la ultima
+            if(i < palabras.length - 1){
+                provisional.append(" ");
             }
 
            }
         }
-        return resultado;
+        return provisional.toString();
     }
 
 
