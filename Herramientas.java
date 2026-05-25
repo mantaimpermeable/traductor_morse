@@ -2,10 +2,11 @@ import java.util.HashMap;
 
 public class Herramientas{
 
+    //Atributos de nuestra clase herramientas
     private HashMap<Character, String> abecedario = new HashMap<>();
     private HashMap<String, Character> abecedarioInverso = new HashMap<>();
 
-
+    //Constructor de la clase, solo incializa los hashMap 
     public Herramientas(){
 
         inicializar(this.abecedario);
@@ -13,7 +14,7 @@ public class Herramientas{
     }
 
     
-
+    //Inicializador del abecedario, privado porque el abecedario siempre es el mismo
     private HashMap<Character, String> inicializar (HashMap<Character, String> abecedario){
         abecedario.put('A', ".-");
         abecedario.put('B', "-...");
@@ -73,6 +74,8 @@ public class Herramientas{
         abecedario.put('/', "-..-.");
         return abecedario;
     }
+
+    //Inicializador del abecedarioInverso, privado porque no se debe de acceder a el
     private HashMap<String, Character> inicializarInverso (HashMap<String, Character> inverso){
         for(HashMap.Entry<Character, String> llave : abecedario.entrySet()){
         abecedarioInverso.put(llave.getValue(), llave.getKey());
@@ -81,11 +84,13 @@ public class Herramientas{
     }
 
 
-
+//Metodo para comprobar si un String es valido o no
     public boolean validString(String texto){
         return (texto != null && texto != "");
     }
 
+    //GETTERS
+    
     public HashMap<Character, String> getAbecedario(){
         return this.abecedario;
     }

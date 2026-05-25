@@ -4,9 +4,12 @@ import java.util.Scanner;
 public class Traductor {
 
     Herramientas herramientas = new Herramientas();
+
+    //Abecedario con los que trabajamos
     private HashMap<Character, String> abecedario = herramientas.getAbecedario();
     private HashMap<String, Character> abecedarioInverso = herramientas.getAbecedarioInverso();
-    
+
+    //Traductor de texto normal a codigo morse utilizando nuestro abecedario
     public String traductorAMorse(String texto){
         String resultado = "";
         //Si la texto no es valida no se ejecuta y se devuelve un string vacio
@@ -45,6 +48,7 @@ public class Traductor {
         return resultado;
     }
 
+    //Traductor de codigo morse a tetxo normal utilizando un abecedario inverso
     private  String traductorDeMorse(String texto){
         StringBuilder provisional = new StringBuilder();
         if(herramientas.validString(texto)){
@@ -78,13 +82,15 @@ public class Traductor {
 
            }
         }
+        //Hay que pasar el metodo a tipo String porque estabamos trabajado con un objeto StringBuilder
         return provisional.toString();
     }
 
 
-    //Logica del traductor
+    //Logica del ejecucion del programa  que puede que moidfique en futuro
     public void empezar (Scanner scanner){
 
+        //Mensaje de bienvenido e instrucciones
         System.out.println("Bienvenido al traductor de codigo morse hecho a las 1:36 de un martes cualquiera");
         System.out.println("Puedes traducir palabras que contengan letras de la A a la Z, del 0 al 9 y algunos simbolos");
         System.out.println("Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento");
@@ -124,15 +130,18 @@ public class Traductor {
             else{
             //Damos el texto original y la traduccion en morse
             String traduccion;
-        
+    
+            //Si se ha elegido la opcion morse se hace una traduccion del texto en morse y si no la otra
             if(morse)traduccion = traductorDeMorse(texto);
             else traduccion = traductorAMorse(texto);
              
+            //sout del resultado de la ejecucion
             System.out.println("Texto original : " + texto);
             System.out.println("Texto en " + modo + " : " + traduccion);
             
         }
     }
+        //Cerramos el scanner y mandamos mensaje indicando que se sale del programa
         scanner.close();
         System.out.println("Saliendo del programa");
     }
