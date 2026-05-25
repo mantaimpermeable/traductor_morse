@@ -2,83 +2,18 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Traductor {
-    //clase donde se ejecutara toda la logica de la traduccion
-    public static boolean validString(String texto){
-        return (texto != null && texto != "");
-    }
-    private static HashMap<Character, String> abecedario = new HashMap<>();
-    static {
-        //Introducimos dentro del hashmap todas las llaves
-    abecedario.put('A', ".-");
-        abecedario.put('B', "-...");
-        abecedario.put('C', "-.-.");
-        abecedario.put('D', "-..");
-        abecedario.put('E', ".");
-        abecedario.put('F', "..-.");
-        abecedario.put('G', "--.");
-        abecedario.put('H', "....");
-        abecedario.put('I', "..");
-        abecedario.put('J', ".---");
-        abecedario.put('K', "-.-");
-        abecedario.put('L', ".-..");
-        abecedario.put('M', "--");
-        abecedario.put('N', "-.");
-        abecedario.put('O', "---");
-        abecedario.put('P', ".--.");
-        abecedario.put('Q', "--.-");
-        abecedario.put('R', ".-.");
-        abecedario.put('S', "...");
-        abecedario.put('T', "-");
-        abecedario.put('U', "..-");
-        abecedario.put('V', "...-");
-        abecedario.put('W', ".--");
-        abecedario.put('X', "-..-");
-        abecedario.put('Y', "-.--");
-        abecedario.put('Z', "--..");
 
-        abecedario.put('0', "-----");
-        abecedario.put('1', ".----");
-        abecedario.put('2', "..---");
-        abecedario.put('3', "...--");
-        abecedario.put('4', "....-");
-        abecedario.put('5', ".....");
-        abecedario.put('6', "-....");
-        abecedario.put('7', "--...");
-        abecedario.put('8', "---..");
-        abecedario.put('9', "----.");
+    Herramientas herramientas = new Herramientas();
 
-        abecedario.put(' ', "/");  // Espacio entre palabras
-        abecedario.put('.', ".-.-.-");
-        abecedario.put(',', "--..--");
-        abecedario.put('?', "..--..");
-        abecedario.put('!', "-.-.--");
-        abecedario.put(';', "-.-.-.");
-        abecedario.put(':', "---...");
-        abecedario.put('"', ".-..-.");
-        abecedario.put('\'', ".----.");
-        abecedario.put('(', "-.--.");
-        abecedario.put(')', "-.--.-");
-        abecedario.put('&', ".-...");
-        abecedario.put('@', ".--.-.");
-        abecedario.put('=', "-...-");
-        abecedario.put('+', ".-.-.");
-        abecedario.put('-', "-....-");
-        abecedario.put('_', "..--.-");
-        abecedario.put('/', "-..-.");
-    }
+    //Abecedario con los que trabajamos
+    private HashMap<Character, String> abecedario = herramientas.getAbecedario();
+    private HashMap<String, Character> abecedarioInverso = herramientas.getAbecedarioInverso();
 
-    private static HashMap<String, Character> abecedarioInverso = new HashMap();
-    static{
-        //Usamos el map.entry para recorrer todos los elementos del abcedario facilmente
-        for(HashMap.Entry<Character, String> llave : abecedario.entrySet()){
-        abecedarioInverso.put(llave.getValue(), llave.getKey());
-        }
-    }
-
-    public static String traductorAMorse(String texto){
+    //Traductor de texto normal a codigo morse utilizando nuestro abecedario
+    public String traductorAMorse(String texto){
         String resultado = "";
         //Si la texto no es valida no se ejecuta y se devuelve un string vacio
-        if(validString(texto)){
+        if(herramientas.validString(texto)){
             StringBuilder provisional = new StringBuilder();
             //Pasamos la texto a mayuscula porque asi tenemos las llaves en el hashmap
             String mayuscula = texto.toUpperCase();
@@ -113,9 +48,10 @@ public class Traductor {
         return resultado;
     }
 
-    private static String traductorDeMorse(String texto){
+    //Traductor de codigo morse a tetxo normal utilizando un abecedario inverso
+    private  String traductorDeMorse(String texto){
         StringBuilder provisional = new StringBuilder();
-        if(validString(texto)){
+        if(herramientas.validString(texto)){
             
             //Separamos el texto en palabras
             String[] palabras = texto.split("/");
@@ -125,7 +61,7 @@ public class Traductor {
             //Creamos variable que representa cada palabra del texto
             String palabra = palabras[i].trim();
             //Comprobamos que la palabra sea valida
-            if(validString(palabra)){
+            if(herramientas.validString(palabra)){
                 //Metemos todas las letras de la palabra en un array
                 String[] letras = palabra.split(" ");
                 //usamos un for each para cada elemento de letras
@@ -146,13 +82,15 @@ public class Traductor {
 
            }
         }
+        //Hay que pasar el metodo a tipo String porque estabamos trabajado con un objeto StringBuilder
         return provisional.toString();
     }
 
 
-    //Logica del traductor
-    public static void empezar (Scanner scanner){
+    //Logica del ejecucion del programa  que puede que moidfique en futuro
+    public void empezar (Scanner scanner){
 
+        //Mensaje de bienvenido e instrucciones
         System.out.println("Bienvenido al traductor de codigo morse hecho a las 1:36 de un martes cualquiera");
         System.out.println("Puedes traducir palabras que contengan letras de la A a la Z, del 0 al 9 y algunos simbolos");
         System.out.println("Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento");
@@ -192,15 +130,27 @@ public class Traductor {
             else{
             //Damos el texto original y la traduccion en morse
             String traduccion;
-        
-            if(morse)traduccion = traductorDeMorse(texto);
-            else traduccion = traductorAMorse(texto);
+    
+            //Si se ha elegido la opcion morse se hace una traduccion del texto en morse y si no la otra
+            if(morse){
+                traduccion = traductorDeMorse(texto);
+                
+            }
+            else {
+                traduccion = traductorAMorse(texto);
+                String error = herramientas.isContained(texto);
+                if(!error.isEmpty()){
+                    System.out.printf("\nLos siguientes caracteres no se encuentran en nuestro abecedario: %s\nson reemplazados por un ?\n\n", error);
+                }
+            }
              
+            //sout del resultado de la ejecucion
             System.out.println("Texto original : " + texto);
             System.out.println("Texto en " + modo + " : " + traduccion);
             
         }
     }
+        //Cerramos el scanner y mandamos mensaje indicando que se sale del programa
         scanner.close();
         System.out.println("Saliendo del programa");
     }
