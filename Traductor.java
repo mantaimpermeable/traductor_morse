@@ -132,8 +132,17 @@ public class Traductor {
             String traduccion;
     
             //Si se ha elegido la opcion morse se hace una traduccion del texto en morse y si no la otra
-            if(morse)traduccion = traductorDeMorse(texto);
-            else traduccion = traductorAMorse(texto);
+            if(morse){
+                traduccion = traductorDeMorse(texto);
+                
+            }
+            else {
+                traduccion = traductorAMorse(texto);
+                String error = herramientas.isContained(texto);
+                if(!error.isEmpty()){
+                    System.out.printf("\nLos siguientes caracteres no se encuentran en nuestro abecedario: %s\nson reemplazados por un ?\n\n", error);
+                }
+            }
              
             //sout del resultado de la ejecucion
             System.out.println("Texto original : " + texto);

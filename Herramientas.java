@@ -89,8 +89,21 @@ public class Herramientas{
         return (texto != null && texto != "");
     }
 
+//Metodo para comprobar si algun caracter no esta en el abecedario
+    public String isContained(String texto){
+        //Variable errores inicializada vacia que retorna vacio si no hay errores
+        String errores = "";
+        for(int i = 0; i < texto.length(); i++){
+            char error = texto.toUpperCase().charAt(i);
+            if(!abecedario.containsKey(error)){
+                errores += " " + error;
+            }
+        }
+        return errores;
+    }
+
     //GETTERS
-    
+
     public HashMap<Character, String> getAbecedario(){
         return this.abecedario;
     }
