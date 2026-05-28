@@ -102,6 +102,22 @@ public class Herramientas{
         return errores;
     }
 
+    public static String instrucciones(){
+
+       Salida salida = new Salida();
+        //Mensaje de bienvenido e instrucciones
+        
+        // instrucciones.append("");
+        // instrucciones.append("");
+        // instrucciones.append("");
+        // instrucciones.append("");
+
+        return salida.encuadrar("Bienvenido al traductor de codigo morse hecho a las 1:36 de un martes cualquiera/"
+                                     +"Puedes traducir palabras que contengan letras de la A a la Z, del 0 al 9 y algunos simbolos/"
+                                     +"Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento/"
+                                     +"Para salir del programa escribe : kirkexiting");
+    }
+
     //GETTERS
 
     public HashMap<Character, String> getAbecedario(){

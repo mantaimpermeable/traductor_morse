@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args){
 
         Traductor traductor = new Traductor();
-        
+        System.out.println(Herramientas.instrucciones());
         Scanner scanner = new Scanner(System.in);
         traductor.empezar(scanner);
     }
