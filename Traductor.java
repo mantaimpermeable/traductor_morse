@@ -90,12 +90,6 @@ public class Traductor {
     //Logica del ejecucion del programa  que puede que moidfique en futuro
     public void empezar (Scanner scanner){
 
-        //Mensaje de bienvenido e instrucciones
-        System.out.println("Bienvenido al traductor de codigo morse hecho a las 1:36 de un martes cualquiera");
-        System.out.println("Puedes traducir palabras que contengan letras de la A a la Z, del 0 al 9 y algunos simbolos");
-        System.out.println("Si algun caracter no esta dentro de nuestro abecedario se mostrara con un ? y posiblemente se añada en algun momento");
-        System.out.println("Para salir del programa escribe : kirkexiting");
-
         //Utilizamos la variable texto para hacer las conversiones pero tambien segun su valor se sigue o no el bucle
         String texto = "";
         while(true){
