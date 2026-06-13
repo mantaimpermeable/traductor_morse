@@ -1,4 +1,4 @@
-package src.main.java;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -50,7 +50,7 @@ public class Traductor {
     }
 
     //Traductor de codigo morse a tetxo normal utilizando un abecedario inverso
-    private  String traductorDeMorse(String texto){
+    public  String traductorDeMorse(String texto){
         StringBuilder provisional = new StringBuilder();
         if(herramientas.validString(texto)){
             

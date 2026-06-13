@@ -1,4 +1,3 @@
-package src.main.java;
 public class Salida {
 
     //Metodo que maneja un texto y lo devuelve en parrafo separando por / y
