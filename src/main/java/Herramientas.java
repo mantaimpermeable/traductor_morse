@@ -1,4 +1,4 @@
-package src;
+package src.main.java;
 import java.util.HashMap;
 
 public class Herramientas{
