@@ -1,3 +1,4 @@
+package src;
 import java.util.Scanner;
 //Aqui se ejecutar el programa y poco mas
 public class Main {

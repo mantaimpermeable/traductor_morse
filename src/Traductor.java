@@ -1,3 +1,4 @@
+package src;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -94,7 +95,7 @@ public class Traductor {
         String texto = "";
         while(true){
 
-            System.out.println("El texto que vas a introducir es M (morse) o C (corriente)?");
+            System.out.println("\nEl texto que vas a introducir es M (morse) o C (corriente)?");
             String eleccion = scanner.nextLine();
 
             if(eleccion.isEmpty() || (!(eleccion.equalsIgnoreCase("c")) && !(eleccion.equalsIgnoreCase("m")))){
